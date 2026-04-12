@@ -11,6 +11,7 @@
         "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^4.0",
+        "livewire/volt": "^1.10",
         "maatwebsite/excel": "^3.1",
         "robsontenorio/mary": "^2.6",
         "spatie/laravel-pdf": "^1.8",

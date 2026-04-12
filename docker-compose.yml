@@ -5,8 +5,8 @@ services:
             dockerfile: .docker/php/Dockerfile
             target: dev
             args:
-                WWWUSER: ${WWWUSER}
-                WWWGROUP: ${WWWGROUP}
+                WWWUSER: 1000
+                WWWGROUP: 1000
         restart: always
         container_name: st-app
         working_dir: /var/www
@@ -18,8 +18,10 @@ services:
             - .docker/php/supervisord.conf:/etc/supervisord.conf
             - .docker/php/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
         depends_on:
-            - mysql  # <--- UBAH INI
-            - redis
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_started
         networks:
             - WebFPTE
 
@@ -44,17 +46,17 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_ROOT_HOST: "%"
             MYSQL_DATABASE: ${DB_DATABASE}
-            # Jika user di .env bukan root, baris di bawah ini akan membuat user baru
-            # MYSQL_USER: ${DB_USERNAME}
-            # MYSQL_PASSWORD: ${DB_PASSWORD}
         volumes:
             - mysql_data:/var/lib/mysql
         networks:
             - WebFPTE
         ports:
             - "3311:3306" # Port default internal
+        healthcheck:
+            test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+            retries: 3
+            timeout: 5s
     # -----------------------------------------------
 
     redis:

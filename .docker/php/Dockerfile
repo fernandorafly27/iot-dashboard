@@ -38,8 +38,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 # 3. Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm
+    && apt-get install -y nodejs
 
 # 4. Setup Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
