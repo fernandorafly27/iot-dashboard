@@ -10,7 +10,8 @@ Volt::route('/', 'pages.auth.login')->name('login');
 // Protected routes (require authentication)
 Route::middleware('auth')->group(function () {
     Volt::route('/dashboard', 'pages.dashboard')->name('dashboard');
-    Volt::route('/program', 'pages.program')->name('program');
+    Route::redirect('/program', '/dashboard')->name('program');
+    Volt::route('/monitor', 'pages.monitor')->name('monitor');
 });
 
 // Logout - Accept both GET and POST

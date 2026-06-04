@@ -15,6 +15,22 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'arduino_api_key' => env('ARDUINO_API_KEY', 'tes12345'),
+
+    'arduino_user_id' => (int) env('ARDUINO_USER_ID', 1),
+
+    'mqtt_host' => env('MQTT_HOST', 'broker.hivemq.com'),
+
+    'mqtt_port' => (int) env('MQTT_PORT', 1883),
+
+    'mqtt_client_id' => env('MQTT_CLIENT_ID', 'laravel-hydroponic-subscriber'),
+
+    'mqtt_sensor_topic' => env('MQTT_SENSOR_TOPIC', 'hydroponic/gateway/data'),
+
+    'mqtt_username' => env('MQTT_USERNAME'),
+
+    'mqtt_password' => env('MQTT_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

@@ -18,15 +18,23 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'program']);
+        // Create roles if they don't exist
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'program']);
 
-        $user = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'st@techupi.id',
-            'password' => Hash::make('Ddw9889##'),
-        ]);
+        // Create or update default user if it doesn't exist
+        $user = User::firstOrCreate(
+            ['email' => 'st@techupi.id'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('Ddw9889##'),
+                'email_verified_at' => now(),
+            ]
+        );
 
-        $user->assignRole('admin');
+        // Assign role only if not already assigned
+        if (!$user->hasRole('admin')) {
+            $user->assignRole('admin');
+        }
     }
 }

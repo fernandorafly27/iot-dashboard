@@ -11,7 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Columns already created in 2026_04_02_064143 - no-op
+        Schema::create('sensor_readings', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,9 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('programs', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn(['name', 'description', 'code', 'category', 'duration', 'status', 'user_id']);
-        });
+        Schema::dropIfExists('sensor_readings');
     }
 };
